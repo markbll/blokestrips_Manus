@@ -1,630 +1,506 @@
 /* ============================================================
    BLOKESTRIPS HOME PAGE
-   Design: Bold Tactical Sports Brand
-   - Hero: full-screen dark with generated golf image, left-anchored
-   - Trust strip: 4 icons
-   - Chaos banner: full-width amber
-   - How It Works: 4 steps with ghost numbers
-   - Packages: 3-column angular cards
-   - Add-Ons: dark section with grid
-   - Testimonials: quote cards
-   - Final CTA: split layout with form
+   Single-page experience with anchor navigation
+   Design: Dark tactical brand, amber accents, sharp corners
    ============================================================ */
-import { useEffect, useRef } from "react";
-import { Link } from "wouter";
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PackageModal from "@/components/PackageModal";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
-  ArrowRight,
-  Trophy,
-  Beer,
-  Users,
-  Star,
-  ClipboardList,
-  UserCheck,
-  CalendarCheck,
-  PartyPopper,
-  Check,
-  ChevronRight,
-  Shirt,
-  Package,
-  Gift,
-  Truck,
-} from "lucide-react";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Star, MapPin, Users, Clock } from "lucide-react";
 
-const HERO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663693922838/Vg3wV8EyDYpxYQ2te2QLoi/hero-golf-AjZ9k7vhxpXhB35fxpGGXJ.webp";
-const FISHING_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663693922838/Vg3wV8EyDYpxYQ2te2QLoi/fishing-trip-Jg7b9uovwJQqTCcDZyHxBz.webp";
-const AERIAL_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663693922838/Vg3wV8EyDYpxYQ2te2QLoi/golf-aerial-jmuYbVWEt5GJoXTr6mbhe3.webp";
-const MATES_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663693922838/Vg3wV8EyDYpxYQ2te2QLoi/mates-weekend-FqWeZ7HxpGNm9NoigiRf55.webp";
-
-const trustItems = [
-  { icon: Trophy, label: "Legendary", sub: "Itineraries" },
-  { icon: Beer, label: "Cold Beer", sub: "Waiting" },
-  { icon: Users, label: "Expert", sub: "Coordination" },
-  { icon: Star, label: "5-Star", sub: "Reviews" },
-];
-
-const steps = [
-  {
-    num: "01",
-    icon: ClipboardList,
-    title: "Tell Us The Vision",
-    desc: "Submit your group's details — dates, size, and what you're after. We handle the research and build the perfect itinerary.",
-  },
-  {
-    num: "02",
-    icon: UserCheck,
-    title: "The Boys Lock In",
-    desc: "We provide a custom booking link for your crew. Everyone pays their own deposit. No more chasing mates for cash.",
-  },
-  {
-    num: "03",
-    icon: CalendarCheck,
-    title: "Logistics Handled",
-    desc: "Accommodation, tee times, charter boats, transport — everything is booked and confirmed. You get a full digital itinerary.",
-  },
-  {
-    num: "04",
-    icon: PartyPopper,
-    title: "Show Up & Send It",
-    desc: "Turn up to cold beers in the fridge and custom gear waiting. No admin, no stress, just a legendary weekend with the boys.",
-  },
-];
-
-const packages = [
-  {
-    img: AERIAL_IMG,
-    location: "Murray River",
-    group: "8+ Blokes",
-    price: "$499",
-    title: "The Ultimate Golf Weekend",
-    features: [
-      "2 Nights Luxury Accommodation",
-      "36 Holes of Championship Golf",
-      "Golf Carts & Bar Tab Included",
-      "Custom Polos & Merch Pack",
-      "Organised Comp & Prizes",
-    ],
-    href: "/golf-trips",
-  },
-  {
-    img: FISHING_IMG,
-    location: "Gold Coast",
-    group: "6–12 Blokes",
-    price: "$550",
-    title: "Deep Sea Fishing Charter",
-    features: [
-      "2 Nights Waterfront Villa",
-      "8-Hour Private Boat Charter",
-      "All Bait, Tackle & Guide",
-      "BBQ Seafood Dinner",
-      "Biggest Catch Trophy",
-    ],
-    href: "/fishing-trips",
-  },
-  {
-    img: MATES_IMG,
-    location: "Nationwide",
-    group: "Any Size",
-    price: "Enquiry",
-    title: "Custom Weekend Escape",
-    features: [
-      "Fully Tailored Itinerary",
-      "Any Destination, Any Activity",
-      "Custom Merchandise Pack",
-      "Full Logistics Coordination",
-      "Everything Booked & Sorted",
-    ],
-    href: "/custom-trips",
-  },
-];
-
-const addOns = [
-  { icon: Shirt, label: "Custom Polo Tops", desc: "Embroidered with your group name and trip details" },
-  { icon: Package, label: "Merch Packs", desc: "Stubby holders, caps, and custom trip gear" },
-  { icon: Beer, label: "Beer on Arrival", desc: "Cold beers delivered to your room on check-in" },
-  { icon: Gift, label: "Big Caddy Golf Cards", desc: "Premium golf card packs for competitions" },
-  { icon: Truck, label: "Transport Options", desc: "Carpooling coordination and charter buses" },
-  { icon: Trophy, label: "Comp & Prizes", desc: "Organised competitions with trophies and prizes" },
-];
-
-const testimonials = [
-  {
-    quote: "Honestly the best weekend we've had in years. Turned up, shirts were waiting, beer was cold, tee times were sorted. I didn't have to organise a single thing.",
-    name: "Jake Thompson",
-    trip: "Thurgoona Golf Trip",
-    stars: 5,
-  },
-  {
-    quote: "As the usual group organiser I'm always stressed before the trip starts. Having BlokesTrips run everything was an absolute game changer. Worth every cent.",
-    name: "Mick O'Brien",
-    trip: "Albury Golf Weekend",
-    stars: 5,
-  },
-  {
-    quote: "Even as a non-golfer I had the best time. Everything was thought of. Already locked in next year's trip and bringing three more of the boys.",
-    name: "Dave Carter",
-    trip: "Murray River Weekend",
-    stars: 5,
-  },
-];
-
-const stats = [
-  { value: "500+", label: "Trips Organised" },
-  { value: "4,800+", label: "Happy Blokes" },
-  { value: "98%", label: "Would Book Again" },
-  { value: "24hr", label: "Response Time" },
-];
+const HERO_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663693922838/Vg3wV8EyDYpxYQ2te2QLoi/hero-golf-AjZ9k7vhxpXhB35fxpGGXJ.webp";
+const FISHING_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663693922838/Vg3wV8EyDYpxYQ2te2QLoi/fishing-trip-Jg7b9uovwJQqTCcDZyHxBz.webp";
+const GOLF_AERIAL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663693922838/Vg3wV8EyDYpxYQ2te2QLoi/golf-aerial-jmuYbVWEt5GJoXTr6mbhe3.webp";
+const MATES_IMAGE = "https://d2xsxph8kpxj0f.cloudfront.net/310519663693922838/Vg3wV8EyDYpxYQ2te2QLoi/mates-weekend-FqWeZ7HxpGNm9NoigiRf55.webp";
 
 export default function Home() {
-  const formRef = useRef<HTMLFormElement>(null);
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    alert("Thanks! We'll be in touch within 24 hours with your trip options.");
-    formRef.current?.reset();
-  }
+  const [selectedPackage, setSelectedPackage] = useState<"golf" | "fishing" | "custom" | null>(null);
 
   return (
-    <div className="min-h-screen bg-[#111111] text-white">
+    <div className="min-h-screen bg-black text-foreground">
       <Navbar />
 
-      {/* ── HERO ── */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* Background image */}
-        <div className="absolute inset-0">
-          <img
-            src={HERO_IMG}
-            alt="Group of blokes on a championship golf course at golden sunset"
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#111111] via-[#111111]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#111111]/60 via-transparent to-[#111111]/30" />
-        </div>
+      {/* HERO SECTION */}
+      <section className="relative pt-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent z-10" />
+        <img
+          src={HERO_IMAGE}
+          alt="Golf sunset"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
 
-        <div className="container relative z-10 pt-24 pb-16 lg:pt-32 lg:pb-24">
-          <div className="max-w-2xl">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 border border-[#E8920A]/40 px-3 py-1.5 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#E8920A]" />
-              <span className="bt-label text-[#E8920A] text-[10px]">Australia's #1 Group Trip Organiser</span>
-            </div>
-
-            {/* Headline */}
-            <h1 className="bt-display text-[clamp(4rem,10vw,8rem)] leading-[0.88] mb-6">
-              <span className="block text-white">GUYS WEEKENDS</span>
-              <span className="block text-[#E8920A]">SORTED.</span>
-            </h1>
-
-            <p className="text-white/70 text-lg lg:text-xl leading-relaxed mb-8 max-w-lg font-[Barlow]">
-              Golf trips, fishing getaways, bucks parties — fully organised end-to-end. You bring the crew. We handle absolutely everything else.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-4">
-              <Link href="/packages">
-                <button className="btn-amber text-sm lg:text-base py-3 px-7">
-                  View Packages <ArrowRight size={16} />
-                </button>
-              </Link>
-              <Link href="/contact">
-                <button className="btn-outline-white text-sm lg:text-base py-3 px-7">
-                  Start a Trip
-                </button>
-              </Link>
-            </div>
-
-            {/* Trust strip */}
-            <div className="flex flex-wrap gap-6 mt-12 pt-8 border-t border-white/15">
-              {trustItems.map(({ icon: Icon, label, sub }) => (
-                <div key={label} className="flex items-center gap-2.5">
-                  <Icon size={18} className="text-[#E8920A]" />
-                  <div>
-                    <div className="text-white font-semibold text-sm leading-tight">{label}</div>
-                    <div className="text-white/50 text-xs">{sub}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="container relative z-20 py-32 flex flex-col justify-center min-h-[80vh]">
+          {/* Trust Badge */}
+          <div className="mb-8 inline-flex items-center gap-2 w-fit px-4 py-2 border border-amber-500/50 bg-black/50">
+            <span className="text-amber-500 text-sm font-bold">★</span>
+            <span className="text-xs font-bold text-amber-500 tracking-wider">AUSTRALIA'S #1 GROUP TRIP ORGANISER</span>
           </div>
-        </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-          <div className="w-px h-10 bg-white animate-pulse" />
-          <span className="bt-label text-white text-[9px]">Scroll</span>
-        </div>
-      </section>
+          {/* Hero Headline */}
+          <h1 className="text-6xl md:text-7xl font-black italic leading-tight mb-6 max-w-2xl">
+            <span className="text-white">GUYS</span>
+            <br />
+            <span className="text-white">WEEKENDS</span>
+            <br />
+            <span className="text-amber-500">SORTED.</span>
+          </h1>
 
-      {/* ── STATS BAR ── */}
-      <section className="bg-[#E8920A]">
-        <div className="container py-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 lg:divide-x lg:divide-[#111111]/20">
-            {stats.map(({ value, label }) => (
-              <div key={label} className="text-center lg:px-8">
-                <div className="bt-display-normal text-[#111111] text-4xl lg:text-5xl">{value}</div>
-                <div className="text-[#111111]/70 text-sm font-semibold mt-1">{label}</div>
-              </div>
-            ))}
+          {/* Hero Subheading */}
+          <p className="text-lg text-foreground/90 max-w-xl mb-8 leading-relaxed">
+            Golf trips, fishing getaways, bucks parties — fully organised end-to-end. You bring the crew. We handle absolutely everything else.
+          </p>
+
+          {/* Hero CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 max-w-md">
+            <Button
+              onClick={() => {
+                const elem = document.querySelector("#packages");
+                elem?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-3 px-6 text-base"
+            >
+              VIEW PACKAGES →
+            </Button>
+            <Button
+              onClick={() => {
+                const elem = document.querySelector("#contact");
+                elem?.scrollIntoView({ behavior: "smooth" });
+              }}
+              variant="outline"
+              className="border-amber-500/50 hover:bg-amber-500/10 font-bold py-3 px-6 text-base"
+            >
+              START A TRIP
+            </Button>
+          </div>
+
+          {/* Trust Strip */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 pt-16 border-t border-amber-500/20">
+            <div className="space-y-1">
+              <div className="text-2xl font-black text-amber-500">500+</div>
+              <div className="text-xs text-foreground/70 font-medium">Trips Organised</div>
+            </div>
+            <div className="space-y-1">
+              <div className="text-2xl font-black text-amber-500">4,800+</div>
+              <div className="text-xs text-foreground/70 font-medium">Happy Blokes</div>
+            </div>
+            <div className="space-y-1">
+              <div className="text-2xl font-black text-amber-500">98%</div>
+              <div className="text-xs text-foreground/70 font-medium">Would Book Again</div>
+            </div>
+            <div className="space-y-1">
+              <div className="text-2xl font-black text-amber-500">24hr</div>
+              <div className="text-xs text-foreground/70 font-medium">Response Time</div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── CHAOS BANNER ── */}
-      <section className="bg-[#1a1a1a] py-20 lg:py-28 overflow-hidden relative">
-        <div className="container text-center relative z-10">
-          <h2 className="bt-display text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.9] mb-6">
-            <span className="block text-white">THINK GROUP CHAT CHAOS</span>
-            <span className="block text-white/30">MINUS THE CHAOS.</span>
+      {/* FEATURED TRIP SECTION */}
+      <section className="py-20 bg-gradient-to-b from-black to-black/50">
+        <div className="container">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-sm font-bold text-amber-500 tracking-widest mb-4">FEATURED TRIP</h3>
+              <h2 className="text-4xl md:text-5xl font-black italic mb-6">
+                Murray River
+                <br />
+                <span className="text-amber-500">Ultimate</span>
+              </h2>
+              <p className="text-lg text-foreground/80 mb-8 leading-relaxed">
+                Championship golf course, luxury accommodation, and legendary camaraderie. Everything you need for an unforgettable weekend.
+              </p>
+              <Button
+                onClick={() => setSelectedPackage("golf")}
+                className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-3 px-8"
+              >
+                EXPLORE GOLF TRIPS
+              </Button>
+            </div>
+            <div className="relative overflow-hidden">
+              <img
+                src={GOLF_AERIAL}
+                alt="Golf course aerial"
+                className="w-full h-96 object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CHAOS TO SORTED SECTION */}
+      <section className="py-20 bg-amber-500">
+        <div className="container text-center">
+          <h2 className="text-4xl md:text-5xl font-black italic text-black mb-6">
+            THINK GROUP CHAT CHAOS
+            <br />
+            <span className="text-black/60">MINUS THE CHAOS.</span>
           </h2>
-          <p className="text-white/60 text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-black/80 max-w-2xl mx-auto">
             We handle the tee times, the bookings, the gear, and the payments. You just turn up with the boys and send it.
           </p>
         </div>
-        {/* Decorative amber line */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#E8920A]" />
       </section>
 
-      {/* ── HOW IT WORKS ── */}
-      <section id="how-it-works" className="bg-[#111111] py-20 lg:py-28 overflow-hidden">
+      {/* HOW IT WORKS SECTION */}
+      <section id="how-it-works" className="py-20 bg-black">
         <div className="container">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16 gap-6">
-            <div>
-              <span className="bt-label text-[#E8920A] block mb-3">Process</span>
-              <h2 className="bt-display text-[clamp(2.5rem,6vw,5rem)]">
-                <span className="block text-white">FOUR STEPS TO A</span>
-                <span className="block text-white/20">LEGENDARY WEEKEND</span>
-              </h2>
-            </div>
-            <p className="text-white/50 max-w-sm lg:text-right leading-relaxed">
+          <div className="mb-16">
+            <h3 className="text-sm font-bold text-amber-500 tracking-widest mb-4">PROCESS</h3>
+            <h2 className="text-5xl md:text-6xl font-black italic mb-4">
+              FOUR STEPS TO A
+              <br />
+              <span className="text-foreground/30">LEGENDARY WEEKEND</span>
+            </h2>
+            <p className="text-foreground/70 max-w-2xl mt-6">
               Every bit of group-chat chaos — removed. From first enquiry to cold beer in your room, it's all covered.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10">
-            {steps.map(({ num, icon: Icon, title, desc }) => (
-              <div
-                key={num}
-                className="bg-[#111111] p-8 relative overflow-hidden group hover:bg-[#1a1a1a] transition-colors"
-              >
-                {/* Ghost number */}
-                <div className="absolute -top-4 -right-2 bt-display text-[7rem] leading-none text-white/[0.04] select-none pointer-events-none">
-                  {num}
-                </div>
-                <div className="relative z-10">
-                  <div className="w-10 h-10 bg-[#E8920A]/10 flex items-center justify-center mb-4 group-hover:bg-[#E8920A]/20 transition-colors">
-                    <Icon size={20} className="text-[#E8920A]" />
-                  </div>
-                  <div className="bt-label text-white/30 text-[10px] mb-2">{num}</div>
-                  <h3 className="bt-display text-xl text-white mb-3">{title}</h3>
-                  <p className="text-white/50 text-sm leading-relaxed">{desc}</p>
-                </div>
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              {
+                step: "01",
+                title: "Tell Us The Vision",
+                desc: "Submit your group's details — dates, size, and what you're after. We handle the research and build the perfect itinerary.",
+              },
+              {
+                step: "02",
+                title: "The Boys Lock In",
+                desc: "We provide a custom booking link for your crew. Everyone pays their own deposit. No more chasing mates for cash.",
+              },
+              {
+                step: "03",
+                title: "Logistics Handled",
+                desc: "Accommodation, tee times, charter boats, transport — everything is booked and confirmed. You get a full digital itinerary.",
+              },
+              {
+                step: "04",
+                title: "Show Up & Send It",
+                desc: "Turn up to cold beers in the fridge and custom gear waiting. No admin, no stress, just a legendary weekend with the boys.",
+              },
+            ].map((item) => (
+              <div key={item.step} className="space-y-4">
+                <div className="text-6xl font-black text-foreground/10">{item.step}</div>
+                <h3 className="text-xl font-black italic text-white">{item.title}</h3>
+                <p className="text-foreground/70 text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
-          </div>
-
-          <div className="mt-10 text-center">
-            <Link href="/how-it-works">
-              <button className="btn-outline-white text-sm py-3 px-8">
-                See Full Process <ChevronRight size={16} />
-              </button>
-            </Link>
           </div>
         </div>
       </section>
 
-      {/* ── PACKAGES ── */}
-      <section id="packages" className="bg-[#0d0d0d] py-20 lg:py-28">
+      {/* PACKAGES SECTION */}
+      <section id="packages" className="py-20 bg-black">
         <div className="container">
-          <div className="text-center mb-14">
-            <span className="bt-label text-[#E8920A] block mb-3">Our Experiences</span>
-            <h2 className="bt-display text-[clamp(2.5rem,6vw,5rem)]">
-              <span className="text-white">CHOOSE YOUR </span>
-              <span className="text-[#E8920A]">LEGEND</span>
+          <div className="mb-16">
+            <h3 className="text-sm font-bold text-amber-500 tracking-widest mb-4">OUR EXPERIENCES</h3>
+            <h2 className="text-5xl md:text-6xl font-black italic mb-4">
+              CHOOSE YOUR
+              <br />
+              <span className="text-amber-500">LEGEND</span>
             </h2>
-            <p className="text-white/50 mt-4 max-w-xl mx-auto">
+            <p className="text-foreground/70 max-w-2xl mt-6">
               Every package includes full organisation, custom polos, prizes and cold beer waiting in your room. Don't see what you want? We'll build it for you.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {packages.map((pkg) => (
-              <div key={pkg.title} className="bg-[#1a1a1a] overflow-hidden card-lift group">
-                {/* Image */}
-                <div className="relative h-52 overflow-hidden">
-                  <img
-                    src={pkg.img}
-                    alt={pkg.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-                    <div>
-                      <div className="bt-label text-white/60 text-[9px]">{pkg.location}</div>
-                      <div className="bt-label text-white text-[10px]">{pkg.group}</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="bt-display-normal text-[#E8920A] text-2xl">{pkg.price}</div>
-                      <div className="text-white/40 text-[10px]">Per person</div>
-                    </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Golf Package */}
+            <div className="border border-foreground/20 overflow-hidden hover:border-amber-500/50 transition">
+              <img src={GOLF_AERIAL} alt="Golf" className="w-full h-48 object-cover" />
+              <div className="p-6 space-y-4">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="font-bold text-white text-lg">Murray River</h3>
+                    <p className="text-sm text-foreground/60">8+ Blokes</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-black text-amber-500">$499</div>
+                    <p className="text-xs text-foreground/60">Per person</p>
                   </div>
                 </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="bt-display text-xl text-white mb-4">{pkg.title}</h3>
-                  <ul className="space-y-2 mb-6">
-                    {pkg.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2.5 text-white/60 text-sm">
-                        <Check size={13} className="text-[#E8920A] flex-shrink-0" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link href={pkg.href}>
-                    <button className="btn-amber w-full justify-center text-sm py-3">
-                      Lock It In <ArrowRight size={14} />
-                    </button>
-                  </Link>
-                </div>
+                <h4 className="font-bold text-white">The Ultimate Golf Weekend</h4>
+                <ul className="space-y-2 text-sm text-foreground/70">
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>2 Nights Luxury Accommodation</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>36 Holes of Championship Golf</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>Golf Carts & Bar Tab Included</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>Custom Polos & Merch Pack</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>Organised Comp & Prizes</span>
+                  </li>
+                </ul>
+                <Button
+                  onClick={() => setSelectedPackage("golf")}
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold mt-4"
+                >
+                  LOCK IT IN
+                </Button>
               </div>
-            ))}
-          </div>
+            </div>
 
-          <div className="mt-10 text-center">
-            <Link href="/packages">
-              <button className="btn-outline-white text-sm py-3 px-8">
-                View All Packages <ChevronRight size={16} />
-              </button>
-            </Link>
+            {/* Fishing Package */}
+            <div className="border border-foreground/20 overflow-hidden hover:border-amber-500/50 transition">
+              <img src={FISHING_IMAGE} alt="Fishing" className="w-full h-48 object-cover" />
+              <div className="p-6 space-y-4">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="font-bold text-white text-lg">Gold Coast</h3>
+                    <p className="text-sm text-foreground/60">6–12 Blokes</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-black text-amber-500">$550</div>
+                    <p className="text-xs text-foreground/60">Per person</p>
+                  </div>
+                </div>
+                <h4 className="font-bold text-white">Deep Sea Fishing Charter</h4>
+                <ul className="space-y-2 text-sm text-foreground/70">
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>2 Nights Waterfront Villa</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>8-Hour Private Boat Charter</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>All Bait, Tackle & Guide</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>BBQ Seafood Dinner</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>Biggest Catch Trophy</span>
+                  </li>
+                </ul>
+                <Button
+                  onClick={() => setSelectedPackage("fishing")}
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold mt-4"
+                >
+                  LOCK IT IN
+                </Button>
+              </div>
+            </div>
+
+            {/* Custom Package */}
+            <div className="border border-foreground/20 overflow-hidden hover:border-amber-500/50 transition">
+              <img src={MATES_IMAGE} alt="Custom" className="w-full h-48 object-cover" />
+              <div className="p-6 space-y-4">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="font-bold text-white text-lg">Nationwide</h3>
+                    <p className="text-sm text-foreground/60">Any Size</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-black text-amber-500">Enquiry</div>
+                    <p className="text-xs text-foreground/60">Per person</p>
+                  </div>
+                </div>
+                <h4 className="font-bold text-white">Custom Weekend Escape</h4>
+                <ul className="space-y-2 text-sm text-foreground/70">
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>Fully Tailored Itinerary</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>Any Destination, Any Activity</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>Custom Merchandise Pack</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>Full Logistics Coordination</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-500 font-bold">✓</span>
+                    <span>Everything Booked & Sorted</span>
+                  </li>
+                </ul>
+                <Button
+                  onClick={() => setSelectedPackage("custom")}
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold mt-4"
+                >
+                  LOCK IT IN
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── FOR ORGANISERS ── */}
-      <section className="bg-[#E8920A] py-16 lg:py-20">
+      {/* FRANCHISE SECTION */}
+      <section id="franchise" className="py-20 bg-gradient-to-b from-black to-black/50">
         <div className="container">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div>
-              <span className="bt-label text-[#111111]/60 block mb-2">For Organisers</span>
-              <h2 className="bt-display text-[clamp(2rem,5vw,3.5rem)] text-[#111111]">
-                STOP BEING THE GROUP CHAT ADMIN.
-              </h2>
-              <p className="text-[#111111]/70 mt-3 max-w-xl">
-                One message from you. We handle every detail — venue, invites, deposits, reminders, rooming, and extras. You just enjoy the trip.
-              </p>
-            </div>
-            <div className="flex-shrink-0 flex gap-4">
-              <Link href="/for-organisers">
-                <button className="bg-[#111111] text-white font-[Barlow] font-700 uppercase tracking-widest text-sm py-3 px-7 hover:bg-[#1a1a1a] transition-colors">
-                  How It Works
-                </button>
-              </Link>
-              <Link href="/contact">
-                <button className="btn-outline-white text-sm py-3 px-7 border-[#111111]/40 text-[#111111] hover:bg-[#111111]/10">
-                  Start Planning
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── ADD-ONS ── */}
-      <section className="bg-[#111111] py-20 lg:py-28">
-        <div className="container">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-14 gap-6">
-            <div>
-              <span className="bt-label text-[#E8920A] block mb-3">Extras</span>
-              <h2 className="bt-display text-[clamp(2rem,5vw,4rem)] text-white">
-                MAKE IT LEGENDARY
-              </h2>
-            </div>
-            <p className="text-white/50 max-w-sm leading-relaxed">
-              Every trip can be loaded up with custom extras. Add merchandise, experiences, and surprises that make the weekend unforgettable.
+          <div className="max-w-2xl">
+            <h3 className="text-sm font-bold text-amber-500 tracking-widest mb-4">OPPORTUNITY</h3>
+            <h2 className="text-5xl md:text-6xl font-black italic mb-6">
+              OWN A BLOKESTRIPS
+              <br />
+              <span className="text-amber-500">TERRITORY</span>
+            </h2>
+            <p className="text-lg text-foreground/80 mb-8">
+              We're building a nationwide network. You get the brand, leads, booking system and supplier network. You deliver the trips.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10">
-            {addOns.map(({ icon: Icon, label, desc }) => (
-              <div key={label} className="bg-[#111111] p-7 hover:bg-[#1a1a1a] transition-colors group">
-                <div className="w-10 h-10 bg-[#E8920A]/10 flex items-center justify-center mb-4 group-hover:bg-[#E8920A]/20 transition-colors">
-                  <Icon size={18} className="text-[#E8920A]" />
-                </div>
-                <h4 className="bt-display text-lg text-white mb-2">{label}</h4>
-                <p className="text-white/40 text-sm leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center">
-            <Link href="/add-ons">
-              <button className="btn-amber text-sm py-3 px-8">
-                View All Add-Ons <ArrowRight size={16} />
-              </button>
-            </Link>
+            <Button className="bg-amber-500 hover:bg-amber-600 text-black font-bold py-3 px-8">
+              GET FRANCHISE KIT
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ── */}
-      <section id="reviews" className="bg-[#0d0d0d] py-20 lg:py-28">
+      {/* REVIEWS SECTION */}
+      <section id="reviews" className="py-20 bg-black">
         <div className="container">
-          <div className="text-center mb-14">
-            <span className="bt-label text-[#E8920A] block mb-3">Reviews</span>
-            <h2 className="bt-display text-[clamp(2.5rem,6vw,5rem)] text-white">
-              REAL BLOKES. REAL TRIPS.
+          <div className="mb-16">
+            <h3 className="text-sm font-bold text-amber-500 tracking-widest mb-4">TESTIMONIALS</h3>
+            <h2 className="text-5xl md:text-6xl font-black italic mb-4">
+              REAL BLOKES.
+              <br />
+              <span className="text-amber-500">REAL TRIPS.</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map(({ quote, name, trip, stars }) => (
-              <div key={name} className="bg-[#1a1a1a] p-8 relative">
-                {/* Amber accent top */}
-                <div className="absolute top-0 left-0 w-12 h-1 bg-[#E8920A]" />
-                <div className="flex gap-1 mb-5">
-                  {Array.from({ length: stars }).map((_, i) => (
-                    <Star key={i} size={14} className="text-[#E8920A] fill-[#E8920A]" />
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                quote: "Honestly the best weekend we've had in years. Turned up, shirts were waiting, beer was cold, tee times were sorted. I didn't have to organise a single thing.",
+                author: "Jake Thompson",
+                trip: "Thurgoona Golf Trip",
+              },
+              {
+                quote: "As the usual group organiser I'm always stressed before the trip starts. Having BlokesTrips run everything was an absolute game changer. Worth every cent.",
+                author: "Mick O'Brien",
+                trip: "Albury Golf Weekend",
+              },
+              {
+                quote: "Even as a non-golfer I had the best time. Everything was thought of. Already locked in next year's trip and bringing three more of the boys.",
+                author: "Dave Carter",
+                trip: "Murray River Weekend",
+              },
+            ].map((review, idx) => (
+              <div key={idx} className="border border-foreground/20 p-6 space-y-4">
+                <div className="flex gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-amber-500 text-amber-500" />
                   ))}
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed mb-6 italic">"{quote}"</p>
+                <p className="text-foreground/80 italic">"{review.quote}"</p>
                 <div>
-                  <div className="bt-display text-base text-white">{name}</div>
-                  <div className="text-white/40 text-xs mt-0.5">{trip}</div>
+                  <p className="font-bold text-white">{review.author}</p>
+                  <p className="text-sm text-foreground/60">{review.trip}</p>
                 </div>
               </div>
             ))}
           </div>
-
-          <div className="mt-10 text-center">
-            <Link href="/testimonials">
-              <button className="btn-outline-white text-sm py-3 px-8">
-                Read More Reviews <ChevronRight size={16} />
-              </button>
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* ── FRANCHISE BANNER ── */}
-      <section className="relative bg-[#1a1a1a] py-16 lg:py-20 overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <img src={AERIAL_IMG} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-[#1a1a1a]/70" />
-        </div>
-        <div className="container relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div>
-              <h2 className="bt-display text-[clamp(2rem,5vw,3.5rem)] text-white">
-                OWN A <span className="text-[#E8920A]">BLOKESTRIPS</span> TERRITORY
-              </h2>
-              <p className="text-white/60 mt-3 max-w-lg">
-                We're building a nationwide network. You get the brand, leads, booking system and supplier network. You deliver the trips.
-              </p>
-            </div>
-            <Link href="/franchise">
-              <button className="btn-amber text-sm py-3 px-8 flex-shrink-0">
-                Get Franchise Kit <ArrowRight size={16} />
-              </button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── FINAL CTA / CONTACT FORM ── */}
-      <section id="contact" className="bg-[#111111] py-20 lg:py-28">
+      {/* CONTACT SECTION */}
+      <section id="contact" className="py-20 bg-black">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
-            {/* Left: Copy */}
-            <div>
-              <span className="bt-label text-[#E8920A] block mb-4">Get Started</span>
-              <h2 className="bt-display text-[clamp(2.5rem,5vw,4rem)] text-white mb-6">
-                READY TO PLAN YOUR NEXT TRIP?
-              </h2>
-              <p className="text-white/60 leading-relaxed mb-10">
-                Tell us what you're after and we'll come back within 24 hours with full trip options and pricing. No commitment required.
-              </p>
+          <div className="max-w-2xl mx-auto">
+            <h3 className="text-sm font-bold text-amber-500 tracking-widest mb-4">GET STARTED</h3>
+            <h2 className="text-5xl md:text-6xl font-black italic mb-8">
+              READY TO PLAN
+              <br />
+              <span className="text-amber-500">YOUR NEXT TRIP?</span>
+            </h2>
 
-              <div className="space-y-6">
-                {[
-                  { title: "Response within 24 hours", desc: "Full trip options and pricing sent directly to you." },
-                  { title: "$200 deposit locks your spot", desc: "Non-refundable. Protects your group's allocation." },
-                  { title: "Everything included", desc: "Polos, prizes, stubby holders, beer on arrival." },
-                  { title: "You do nothing", desc: "We manage all registrations, payments and logistics." },
-                ].map(({ title, desc }) => (
-                  <div key={title} className="flex gap-4">
-                    <div className="w-6 h-6 bg-[#E8920A] flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check size={12} className="text-[#111111]" />
-                    </div>
-                    <div>
-                      <div className="text-white font-semibold text-sm">{title}</div>
-                      <div className="text-white/50 text-sm mt-0.5">{desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <form className="space-y-4 mb-8">
+              <Input
+                placeholder="Full Name"
+                className="bg-muted border-foreground/20 text-white placeholder:text-foreground/50"
+              />
+              <Input
+                placeholder="Mobile"
+                type="tel"
+                className="bg-muted border-foreground/20 text-white placeholder:text-foreground/50"
+              />
+              <Input
+                placeholder="Email"
+                type="email"
+                className="bg-muted border-foreground/20 text-white placeholder:text-foreground/50"
+              />
 
-            {/* Right: Form */}
-            <div className="bg-[#1a1a1a] p-8 lg:p-10">
-              <h3 className="bt-display text-2xl text-white mb-8">Plan My Trip</h3>
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="bt-label text-white/50 text-[10px] block mb-2">Full Name</label>
-                  <input
-                    type="text"
-                    placeholder="John Doe"
-                    required
-                    className="w-full bg-[#111111] border border-white/10 text-white placeholder-white/30 px-4 py-3 text-sm focus:outline-none focus:border-[#E8920A] transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="bt-label text-white/50 text-[10px] block mb-2">Mobile</label>
-                  <input
-                    type="tel"
-                    placeholder="0400 000 000"
-                    required
-                    className="w-full bg-[#111111] border border-white/10 text-white placeholder-white/30 px-4 py-3 text-sm focus:outline-none focus:border-[#E8920A] transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="bt-label text-white/50 text-[10px] block mb-2">Email</label>
-                  <input
-                    type="email"
-                    placeholder="john@example.com"
-                    required
-                    className="w-full bg-[#111111] border border-white/10 text-white placeholder-white/30 px-4 py-3 text-sm focus:outline-none focus:border-[#E8920A] transition-colors"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="bt-label text-white/50 text-[10px] block mb-2">Trip Type</label>
-                    <select
-                      required
-                      className="w-full bg-[#111111] border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-[#E8920A] transition-colors appearance-none"
-                    >
-                      <option value="" className="text-white/30">Select type...</option>
-                      <option value="golf">Golf Weekend</option>
-                      <option value="fishing">Fishing Trip</option>
-                      <option value="bucks">Bucks Party</option>
-                      <option value="custom">Custom Trip</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="bt-label text-white/50 text-[10px] block mb-2">Group Size</label>
-                    <select
-                      required
-                      className="w-full bg-[#111111] border border-white/10 text-white px-4 py-3 text-sm focus:outline-none focus:border-[#E8920A] transition-colors appearance-none"
-                    >
-                      <option value="">Select size...</option>
-                      <option value="4-8">4–8 blokes</option>
-                      <option value="8-16">8–16 blokes</option>
-                      <option value="16-24">16–24 blokes</option>
-                      <option value="24+">24+ blokes</option>
-                    </select>
-                  </div>
-                </div>
-                <div>
-                  <label className="bt-label text-white/50 text-[10px] block mb-2">Anything Else?</label>
-                  <textarea
-                    rows={3}
-                    placeholder="Tell us about preferred dates, locations, or special requests..."
-                    className="w-full bg-[#111111] border border-white/10 text-white placeholder-white/30 px-4 py-3 text-sm focus:outline-none focus:border-[#E8920A] transition-colors resize-none"
-                  />
-                </div>
-                <button type="submit" className="btn-amber w-full justify-center py-4 text-base">
-                  Send Enquiry <ArrowRight size={18} />
-                </button>
-                <p className="text-white/30 text-xs text-center">
-                  By submitting you agree to our Terms & Conditions.
-                </p>
-              </form>
-            </div>
+              <Select>
+                <SelectTrigger className="bg-muted border-foreground/20 text-white">
+                  <SelectValue placeholder="Trip Type" />
+                </SelectTrigger>
+                <SelectContent className="bg-muted border-foreground/20">
+                  <SelectItem value="golf">Golf Weekend</SelectItem>
+                  <SelectItem value="fishing">Fishing Trip</SelectItem>
+                  <SelectItem value="bucks">Bucks Party</SelectItem>
+                  <SelectItem value="custom">Custom Trip</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select>
+                <SelectTrigger className="bg-muted border-foreground/20 text-white">
+                  <SelectValue placeholder="Group Size" />
+                </SelectTrigger>
+                <SelectContent className="bg-muted border-foreground/20">
+                  <SelectItem value="4-8">4–8 blokes</SelectItem>
+                  <SelectItem value="8-16">8–16 blokes</SelectItem>
+                  <SelectItem value="16-24">16–24 blokes</SelectItem>
+                  <SelectItem value="24+">24+ blokes</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Textarea
+                placeholder="Tell us about preferred dates, locations, or special requests..."
+                className="bg-muted border-foreground/20 text-white placeholder:text-foreground/50 min-h-24"
+              />
+
+              <Button className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold py-3">
+                SEND ENQUIRY
+              </Button>
+            </form>
+
+            <p className="text-sm text-foreground/60 text-center">
+              By submitting you agree to our Terms & Conditions.
+            </p>
           </div>
         </div>
       </section>
 
       <Footer />
+
+      {/* Package Modal */}
+      <PackageModal
+        isOpen={selectedPackage !== null}
+        onClose={() => setSelectedPackage(null)}
+        tripType={selectedPackage}
+      />
     </div>
   );
 }
