@@ -1,15 +1,15 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import PackageCategory from "@/components/PackageCategory";
-import { getPackagesByCategory } from "@/lib/packageData";
+import DynamicPackageCategoryPage from "@/components/DynamicPackageCategoryPage";
+import { packages } from "@/lib/packageData";
 
 export default function FishingPackages() {
-  const packages = getPackagesByCategory("fishing");
+  const fishingPackages = packages.filter((p) => p.category === "fishing");
+
   return (
-    <div>
-      <Navbar />
-      <PackageCategory packages={packages} categoryLabel="Fishing Trips" />
-      <Footer />
-    </div>
+    <DynamicPackageCategoryPage
+      category="fishing"
+      categoryLabel="Fishing Trips"
+      categoryDescription="Explore our curated selection of fishing trips and charters across Australia."
+      packages={fishingPackages}
+    />
   );
 }

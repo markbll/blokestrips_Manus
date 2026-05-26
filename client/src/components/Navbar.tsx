@@ -1,9 +1,9 @@
 /* ============================================================
    BLOKESTRIPS NAVBAR
-   Single-page anchor navigation with package dropdown
+   Fixed dropdown with click-to-open behavior
    ============================================================ */
 import { useState, useEffect } from "react";
-import { useLocation, useRoute } from "wouter";
+import { useLocation } from "wouter";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 export default function Navbar() {
@@ -18,6 +18,21 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('[data-dropdown-container]')) {
+        setDropdownOpen(false);
+      }
+    };
+
+    if (dropdownOpen) {
+      document.addEventListener("click", handleClickOutside);
+      return () => document.removeEventListener("click", handleClickOutside);
+    }
+  }, [dropdownOpen]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -75,25 +90,28 @@ export default function Navbar() {
           ))}
 
           {/* Packages Dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => setDropdownOpen(true)}
-            onMouseLeave={() => setDropdownOpen(false)}
-          >
-            <button className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-amber-500 transition">
+          <div data-dropdown-container className="relative">
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-amber-500 transition"
+            >
               Packages
               <ChevronDown
-                className={`w-4 h-4 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+                className={`w-4 h-4 transition-transform duration-200 ${
+                  dropdownOpen ? "rotate-180" : ""
+                }`}
               />
             </button>
 
             {dropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 w-56 bg-black/95 border border-foreground/20 shadow-lg">
-                {packageCategories.map((cat) => (
+              <div className="absolute top-full left-0 mt-2 w-56 bg-black/98 border border-amber-500/50 shadow-2xl z-50">
+                {packageCategories.map((cat, idx) => (
                   <a
                     key={cat.href}
                     href={cat.href}
-                    className="block px-4 py-3 text-sm text-foreground hover:bg-amber-500/10 hover:text-amber-500 transition border-b border-foreground/10 last:border-0"
+                    className={`block px-4 py-3 text-sm text-foreground hover:bg-amber-500/20 hover:text-amber-500 transition ${
+                      idx !== packageCategories.length - 1 ? "border-b border-foreground/10" : ""
+                    }`}
                   >
                     {cat.label}
                   </a>
@@ -105,7 +123,7 @@ export default function Navbar() {
 
         {/* Desktop CTA */}
         <a
-          href={isHomePage ? "#contact" : "/"}
+          href={isHomePage ? "#our-experiences" : "/#our-experiences"}
           onClick={isHomePage ? handleNavClick : undefined}
           className="hidden md:inline-block px-6 py-2 bg-amber-500 hover:bg-amber-600 text-black font-bold text-sm transition"
         >
@@ -137,7 +155,9 @@ export default function Navbar() {
             ))}
 
             {/* Mobile Packages Section */}
-            <div className="px-4 py-2 text-sm font-medium text-amber-500">Packages</div>
+            <div className="px-4 py-2 text-sm font-medium text-amber-500 border-t border-foreground/10 mt-2">
+              Packages
+            </div>
             {packageCategories.map((cat) => (
               <a
                 key={cat.href}
@@ -149,9 +169,9 @@ export default function Navbar() {
             ))}
 
             <a
-              href={isHomePage ? "#contact" : "/"}
+              href={isHomePage ? "#our-experiences" : "/#our-experiences"}
               onClick={isHomePage ? handleNavClick : undefined}
-              className="block px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black font-bold text-sm rounded transition"
+              className="block px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black font-bold text-sm rounded transition mt-4"
             >
               PLAN MY TRIP
             </a>

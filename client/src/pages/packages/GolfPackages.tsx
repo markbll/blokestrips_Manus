@@ -1,15 +1,15 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import PackageCategory from "@/components/PackageCategory";
-import { getPackagesByCategory } from "@/lib/packageData";
+import DynamicPackageCategoryPage from "@/components/DynamicPackageCategoryPage";
+import { packages } from "@/lib/packageData";
 
 export default function GolfPackages() {
-  const packages = getPackagesByCategory("golf");
+  const golfPackages = packages.filter((p) => p.category === "golf");
+
   return (
-    <div>
-      <Navbar />
-      <PackageCategory packages={packages} categoryLabel="Golf Weekends" />
-      <Footer />
-    </div>
+    <DynamicPackageCategoryPage
+      category="golf"
+      categoryLabel="Golf Weekends"
+      categoryDescription="Explore our curated selection of golf weekends experiences across Australia."
+      packages={golfPackages}
+    />
   );
 }

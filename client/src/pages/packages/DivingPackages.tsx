@@ -1,15 +1,15 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import PackageCategory from "@/components/PackageCategory";
-import { getPackagesByCategory } from "@/lib/packageData";
+import DynamicPackageCategoryPage from "@/components/DynamicPackageCategoryPage";
+import { packages } from "@/lib/packageData";
 
 export default function DivingPackages() {
-  const packages = getPackagesByCategory("diving");
+  const divingPackages = packages.filter((p) => p.category === "diving");
+
   return (
-    <div>
-      <Navbar />
-      <PackageCategory packages={packages} categoryLabel="Diving Expeditions" />
-      <Footer />
-    </div>
+    <DynamicPackageCategoryPage
+      category="diving"
+      categoryLabel="Diving Expeditions"
+      categoryDescription="Explore our curated selection of diving expeditions across Australia's best dive sites."
+      packages={divingPackages}
+    />
   );
 }

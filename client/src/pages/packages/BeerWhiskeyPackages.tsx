@@ -1,15 +1,15 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import PackageCategory from "@/components/PackageCategory";
-import { getPackagesByCategory } from "@/lib/packageData";
+import DynamicPackageCategoryPage from "@/components/DynamicPackageCategoryPage";
+import { packages } from "@/lib/packageData";
 
 export default function BeerWhiskeyPackages() {
-  const packages = getPackagesByCategory("beer-whiskey");
+  const beerWhiskeyPackages = packages.filter((p) => p.category === "beer-whiskey");
+
   return (
-    <div>
-      <Navbar />
-      <PackageCategory packages={packages} categoryLabel="Beer & Whiskey Tours" />
-      <Footer />
-    </div>
+    <DynamicPackageCategoryPage
+      category="beer-whiskey"
+      categoryLabel="Beer & Whiskey Tours"
+      categoryDescription="Explore our curated selection of brewery and distillery tours across Australia."
+      packages={beerWhiskeyPackages}
+    />
   );
 }

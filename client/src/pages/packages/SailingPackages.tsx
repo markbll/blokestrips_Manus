@@ -1,15 +1,15 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import PackageCategory from "@/components/PackageCategory";
-import { getPackagesByCategory } from "@/lib/packageData";
+import DynamicPackageCategoryPage from "@/components/DynamicPackageCategoryPage";
+import { packages } from "@/lib/packageData";
 
 export default function SailingPackages() {
-  const packages = getPackagesByCategory("sailing");
+  const sailingPackages = packages.filter((p) => p.category === "sailing");
+
   return (
-    <div>
-      <Navbar />
-      <PackageCategory packages={packages} categoryLabel="Sailing Adventures" />
-      <Footer />
-    </div>
+    <DynamicPackageCategoryPage
+      category="sailing"
+      categoryLabel="Sailing Adventures"
+      categoryDescription="Explore our curated selection of sailing adventures across Australia's coastlines."
+      packages={sailingPackages}
+    />
   );
 }
