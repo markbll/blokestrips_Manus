@@ -484,7 +484,7 @@ export const getCategoryLabel = (category: PackageCategory): string => {
     sailing: "Sailing Adventures",
     diving: "Diving Expeditions",
     "beer-whiskey": "Beer & Whiskey Tours",
-    custom: "Custom Escapes",
+    "custom-escapes": "Custom Escapes",
   };
   return labels[category];
 };
