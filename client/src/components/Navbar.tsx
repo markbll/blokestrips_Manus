@@ -177,12 +177,13 @@ export default function Navbar() {
             ))}
 
             {/* Mobile Packages Section */}
-            <button
+            <a
+              href="#our-experiences"
               onClick={handlePackagesClick}
-              className="w-full text-left block px-4 py-2 text-sm font-medium text-amber-500 border-t border-foreground/10 mt-2 hover:bg-muted rounded transition"
+              className="block px-4 py-2 text-sm font-medium text-amber-500 border-t border-foreground/10 mt-2 hover:bg-muted rounded transition"
             >
               Packages
-            </button>
+            </a>
             {packageCategories.map((cat) => (
               <a
                 key={cat.href}
