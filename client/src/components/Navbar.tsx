@@ -2,7 +2,7 @@
    BLOKESTRIPS NAVBAR
    Hover-based dropdown for Packages, scroll to OUR EXPERIENCES
    ============================================================ */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
 import { Menu, X, ChevronDown } from "lucide-react";
 
@@ -12,6 +12,8 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [location] = useLocation();
   const isHomePage = location === "/";
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -45,6 +47,17 @@ export default function Navbar() {
     } else {
       window.location.href = "/#our-experiences";
     }
+  };
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setDropdownOpen(false);
+    }, 150);
   };
 
   const packageCategories = [
@@ -91,13 +104,12 @@ export default function Navbar() {
 
           {/* Packages Dropdown (Hover-based) */}
           <div
-            data-dropdown-container
+            ref={dropdownRef}
             className="relative"
-            onMouseEnter={() => setDropdownOpen(true)}
-            onMouseLeave={() => setDropdownOpen(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
-            <a
-              href="#our-experiences"
+            <button
               onClick={handlePackagesClick}
               className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-amber-500 transition cursor-pointer"
             >
@@ -107,10 +119,14 @@ export default function Navbar() {
                   dropdownOpen ? "rotate-180" : ""
                 }`}
               />
-            </a>
+            </button>
 
             {dropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 w-56 bg-black/98 border border-amber-500/50 shadow-2xl z-50">
+              <div 
+                className="absolute top-full left-0 mt-2 w-56 bg-black/98 border border-amber-500/50 shadow-2xl z-50"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
                 {packageCategories.map((cat, idx) => (
                   <a
                     key={cat.href}
@@ -161,13 +177,12 @@ export default function Navbar() {
             ))}
 
             {/* Mobile Packages Section */}
-            <a
-              href="#our-experiences"
+            <button
               onClick={handlePackagesClick}
-              className="block px-4 py-2 text-sm font-medium text-amber-500 border-t border-foreground/10 mt-2 hover:bg-muted rounded transition"
+              className="w-full text-left block px-4 py-2 text-sm font-medium text-amber-500 border-t border-foreground/10 mt-2 hover:bg-muted rounded transition"
             >
               Packages
-            </a>
+            </button>
             {packageCategories.map((cat) => (
               <a
                 key={cat.href}
