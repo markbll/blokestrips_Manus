@@ -3,7 +3,7 @@
    All package categories and state-based packages
    ============================================================ */
 
-export type PackageCategory = "golf" | "fishing" | "sailing" | "diving" | "beer-whiskey" | "custom";
+export type PackageCategory = "golf" | "fishing" | "sailing" | "diving" | "beer-whiskey" | "custom-escapes";
 export type State = "VIC" | "NSW" | "QLD" | "SA" | "TAS" | "WA" | "NT" | "ACT";
 
 export interface Package {
@@ -371,6 +371,86 @@ export const packages: Package[] = [
       { day: "Day 1", activities: "Arrive, settle in, welcome drinks, brewery tour" },
       { day: "Day 2", activities: "Distillery tastings, whiskey masterclass, gourmet dinner" },
       { day: "Day 3", activities: "Farewell brewery tour, lunch, depart" },
+    ],
+  },
+
+  // CUSTOM ESCAPES
+  {
+    id: "custom-escape-nationwide-bucks",
+    name: "Bucks Party Blowout",
+    location: "Nationwide",
+    state: "NSW",
+    category: "custom-escapes",
+    price: 0,
+    groupSize: "Any Size",
+    duration: "Custom",
+    description: "Fully customised bucks party experience tailored to your crew.",
+    highlights: ["Fully Customised", "Any Destination", "Any Activities", "Complete Organisation"],
+    included: [
+      "Custom Itinerary Design",
+      "Accommodation Coordination",
+      "Activity Booking & Management",
+      "Custom Merchandise Pack",
+      "Transport Coordination",
+      "Catering & Bar Arrangements",
+      "Entertainment Booking",
+      "24/7 Support",
+    ],
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663693922838/Vg3wV8EyDYpxYQ2te2QLoi/mates-weekend-FqWeZ7HxpGNm9NoigiRf55.webp",
+    itinerary: [
+      { day: "Custom", activities: "Your itinerary, your way. We handle everything." },
+    ],
+  },
+  {
+    id: "custom-escape-nationwide-corporate",
+    name: "Corporate Team Building",
+    location: "Nationwide",
+    state: "VIC",
+    category: "custom-escapes",
+    price: 0,
+    groupSize: "Any Size",
+    duration: "Custom",
+    description: "Bespoke corporate team building and incentive experiences.",
+    highlights: ["Team Building Focus", "Custom Activities", "Fully Managed", "Nationwide"],
+    included: [
+      "Custom Program Design",
+      "Team Building Activities",
+      "Accommodation & Meals",
+      "Transport & Logistics",
+      "Professional Facilitators",
+      "Custom Merchandise",
+      "Photography & Videography",
+      "Post-Event Reporting",
+    ],
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663693922838/Vg3wV8EyDYpxYQ2te2QLoi/mates-weekend-FqWeZ7HxpGNm9NoigiRf55.webp",
+    itinerary: [
+      { day: "Custom", activities: "Designed specifically for your team's goals." },
+    ],
+  },
+  {
+    id: "custom-escape-nationwide-adventure",
+    name: "Adventure Expedition",
+    location: "Nationwide",
+    state: "QLD",
+    category: "custom-escapes",
+    price: 0,
+    groupSize: "Any Size",
+    duration: "Custom",
+    description: "Custom adventure expeditions with activities tailored to your group.",
+    highlights: ["Adventure Activities", "Custom Routes", "Expert Guides", "All-Inclusive"],
+    included: [
+      "Itinerary Planning",
+      "Activity Booking",
+      "Expert Guides & Instructors",
+      "All Equipment Provided",
+      "Accommodation & Meals",
+      "Transport & Logistics",
+      "Safety & Insurance",
+      "Custom Merchandise",
+    ],
+    image: "https://d2xsxph8kpxj0f.cloudfront.net/310519663693922838/Vg3wV8EyDYpxYQ2te2QLoi/mates-weekend-FqWeZ7HxpGNm9NoigiRf55.webp",
+    itinerary: [
+      { day: "Custom", activities: "Your adventure, your rules. We make it happen." },
     ],
   },
 ];
