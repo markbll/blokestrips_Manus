@@ -13,7 +13,7 @@ export default function Navbar() {
   const [location] = useLocation();
   const isHomePage = location === "/";
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
