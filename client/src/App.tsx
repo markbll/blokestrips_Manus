@@ -5,11 +5,23 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import GolfPackages from "./pages/packages/GolfPackages";
+import FishingPackages from "./pages/packages/FishingPackages";
+import SailingPackages from "./pages/packages/SailingPackages";
+import DivingPackages from "./pages/packages/DivingPackages";
+import BeerWhiskeyPackages from "./pages/packages/BeerWhiskeyPackages";
+import PackageDetailPage from "./pages/packages/PackageDetailPage";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/packages/golf"} component={GolfPackages} />
+      <Route path={"/packages/fishing"} component={FishingPackages} />
+      <Route path={"/packages/sailing"} component={SailingPackages} />
+      <Route path={"/packages/diving"} component={DivingPackages} />
+      <Route path={"/packages/beer-whiskey"} component={BeerWhiskeyPackages} />
+      <Route path={"/packages/:category/:id"} component={PackageDetailPage} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
