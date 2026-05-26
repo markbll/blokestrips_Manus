@@ -109,7 +109,8 @@ export default function Navbar() {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <button
+            <a
+              href="#our-experiences"
               onClick={handlePackagesClick}
               className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-amber-500 transition cursor-pointer"
             >
@@ -119,7 +120,7 @@ export default function Navbar() {
                   dropdownOpen ? "rotate-180" : ""
                 }`}
               />
-            </button>
+            </a>
 
             {dropdownOpen && (
               <div 
