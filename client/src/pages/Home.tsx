@@ -202,7 +202,7 @@ export default function Home() {
       </section>
 
       {/* PACKAGES SECTION */}
-      <section id="packages" className="py-20 bg-black">
+      <section id="our-experiences" className="py-20 bg-black">
         <div className="container">
           <div className="mb-16">
             <h3 className="text-sm font-bold text-amber-500 tracking-widest mb-4">OUR EXPERIENCES</h3>
