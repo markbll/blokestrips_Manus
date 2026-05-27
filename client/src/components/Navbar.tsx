@@ -1,6 +1,6 @@
 /* ============================================================
    BLOKESTRIPS NAVBAR
-   Hover-based dropdown for Packages, scroll to OUR EXPERIENCES
+   Works on homepage and all sub-pages (packages, etc.)
    ============================================================ */
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
@@ -21,31 +21,32 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  // Handle navigation to sections on homepage
+  const handleSectionClick = (sectionId: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const href = (e.currentTarget as HTMLAnchorElement).getAttribute("href");
-    if (!href) return;
-
-    if (href.startsWith("#")) {
-      const element = document.querySelector(href);
+    
+    if (isHomePage) {
+      // On homepage, scroll to section
+      const element = document.querySelector(`#${sectionId}`);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
         setMobileOpen(false);
         setDropdownOpen(false);
       }
+    } else {
+      // On sub-pages, navigate to homepage with anchor
+      window.location.href = `/#${sectionId}`;
     }
   };
 
-  const handlePackagesClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  // Handle Home/Logo click - scroll to top on homepage, navigate on sub-pages
+  const handleHomeClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     if (isHomePage) {
-      const element = document.querySelector("#our-experiences");
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-        setDropdownOpen(false);
-      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setMobileOpen(false);
     } else {
-      window.location.href = "/#our-experiences";
+      window.location.href = "/";
     }
   };
 
@@ -70,10 +71,10 @@ export default function Navbar() {
   ];
 
   const mainNavLinks = [
-    { label: "Home", href: "/" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "Reviews", href: "#reviews" },
-    { label: "Contact", href: "#contact" },
+    { label: "Home", onClick: handleHomeClick, href: "#" },
+    { label: "How It Works", onClick: handleSectionClick("how-it-works"), href: "#" },
+    { label: "Reviews", onClick: handleSectionClick("reviews"), href: "#" },
+    { label: "Contact", onClick: handleSectionClick("contact"), href: "#" },
   ];
 
   return (
@@ -84,7 +85,11 @@ export default function Navbar() {
     >
       <div className="container flex items-center justify-between h-16">
         {/* Logo */}
-        <a href="/" className="font-black text-xl italic tracking-tight flex-shrink-0">
+        <a 
+          href="#" 
+          onClick={handleHomeClick}
+          className="font-black text-xl italic tracking-tight flex-shrink-0 hover:opacity-80 transition"
+        >
           <span className="text-white">BLOKES</span>
           <span className="text-amber-500">TRIPS</span>
         </a>
@@ -93,9 +98,9 @@ export default function Navbar() {
         <nav className="hidden md:flex items-center gap-8">
           {mainNavLinks.map((link) => (
             <a
-              key={link.href}
+              key={link.label}
               href={link.href}
-              onClick={link.href.startsWith("#") ? handleNavClick : undefined}
+              onClick={link.onClick}
               className="text-sm font-medium text-foreground hover:text-amber-500 transition"
             >
               {link.label}
@@ -110,8 +115,8 @@ export default function Navbar() {
             onMouseLeave={handleMouseLeave}
           >
             <a
-              href="#our-experiences"
-              onClick={handlePackagesClick}
+              href="#"
+              onClick={handleSectionClick("our-experiences")}
               className="flex items-center gap-1 text-sm font-medium text-foreground hover:text-amber-500 transition cursor-pointer"
             >
               Packages
@@ -146,8 +151,8 @@ export default function Navbar() {
 
         {/* Desktop CTA */}
         <a
-          href={isHomePage ? "#our-experiences" : "/#our-experiences"}
-          onClick={isHomePage ? handleNavClick : undefined}
+          href="#"
+          onClick={handleSectionClick("our-experiences")}
           className="hidden md:inline-block px-6 py-2 bg-amber-500 hover:bg-amber-600 text-black font-bold text-sm transition"
         >
           PLAN MY TRIP
@@ -168,9 +173,9 @@ export default function Navbar() {
           <div className="container space-y-2">
             {mainNavLinks.map((link) => (
               <a
-                key={link.href}
+                key={link.label}
                 href={link.href}
-                onClick={link.href.startsWith("#") ? handleNavClick : undefined}
+                onClick={link.onClick}
                 className="block px-4 py-2 text-sm font-medium text-foreground hover:bg-muted hover:text-amber-500 rounded transition"
               >
                 {link.label}
@@ -179,8 +184,8 @@ export default function Navbar() {
 
             {/* Mobile Packages Section */}
             <a
-              href="#our-experiences"
-              onClick={handlePackagesClick}
+              href="#"
+              onClick={handleSectionClick("our-experiences")}
               className="block px-4 py-2 text-sm font-medium text-amber-500 border-t border-foreground/10 mt-2 hover:bg-muted rounded transition"
             >
               Packages
@@ -196,9 +201,9 @@ export default function Navbar() {
             ))}
 
             <a
-              href={isHomePage ? "#our-experiences" : "/#our-experiences"}
-              onClick={isHomePage ? handleNavClick : undefined}
-              className="block px-4 py-2 bg-amber-500 hover:bg-amber-600 text-black font-bold text-sm rounded transition mt-4"
+              href="#"
+              onClick={handleSectionClick("our-experiences")}
+              className="block px-4 py-2 text-sm font-medium text-amber-500 border-t border-foreground/10 mt-2 hover:bg-muted rounded transition"
             >
               PLAN MY TRIP
             </a>
