@@ -316,6 +316,164 @@ export default function Home() {
       </section>
 
       {/* ============================================================
+          PREMIUM PACKAGE CARDS SECTION
+          ============================================================ */}
+      <section className="py-24 bg-black">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-black italic mb-6">
+              Premium Experiences
+            </h2>
+            <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
+              Handpicked packages designed for unforgettable weekends with your crew.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Golf Weekend Card */}
+            <div className="group relative overflow-hidden border border-amber-500/30 hover:border-amber-500 transition-all duration-300">
+              <div className="relative overflow-hidden h-80">
+                <img
+                  src={GOLF_AERIAL}
+                  alt="Golf Weekend"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+              </div>
+              <div className="absolute inset-0 flex flex-col justify-end p-8">
+                <h3 className="text-3xl font-black italic text-white mb-3">Golf Weekend Packages</h3>
+                <ul className="space-y-2 mb-6 text-sm text-foreground/90">
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Accommodation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Tee times
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Optional brewery add-ons
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Transfers
+                  </li>
+                </ul>
+                <Button
+                  onClick={() => navigate("/packages/golf")}
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold py-3 text-base"
+                >
+                  View Golf Trips
+                </Button>
+              </div>
+            </div>
+
+            {/* Fishing Weekends Card */}
+            <div className="group relative overflow-hidden border border-amber-500/30 hover:border-amber-500 transition-all duration-300">
+              <div className="relative overflow-hidden h-80">
+                <img
+                  src={FISHING_IMAGE}
+                  alt="Fishing Weekends"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+              </div>
+              <div className="absolute inset-0 flex flex-col justify-end p-8">
+                <h3 className="text-3xl font-black italic text-white mb-3">Fishing Weekends</h3>
+                <ul className="space-y-2 mb-6 text-sm text-foreground/90">
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Charter options
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Accommodation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Local pub recommendations
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Experienced guides
+                  </li>
+                </ul>
+                <Button
+                  onClick={() => navigate("/packages/fishing")}
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold py-3 text-base"
+                >
+                  View Fishing Trips
+                </Button>
+              </div>
+            </div>
+
+            {/* Bucks Party Card */}
+            <div className="group relative overflow-hidden border border-amber-500/30 hover:border-amber-500 transition-all duration-300">
+              <div className="relative overflow-hidden h-80">
+                <img
+                  src={MATES_IMAGE}
+                  alt="Bucks Party"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+              </div>
+              <div className="absolute inset-0 flex flex-col justify-end p-8">
+                <h3 className="text-3xl font-black italic text-white mb-3">Bucks Party Weekends</h3>
+                <ul className="space-y-2 mb-6 text-sm text-foreground/90">
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Accommodation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Golf
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Nightlife
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Brewery tours
+                  </li>
+                </ul>
+                <Button
+                  onClick={() => navigate("/packages/custom-escapes")}
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold py-3 text-base"
+                >
+                  Plan Bucks Trip
+                </Button>
+              </div>
+            </div>
+
+            {/* Sport Weekend Card */}
+            <div className="group relative overflow-hidden border border-amber-500/30 hover:border-amber-500 transition-all duration-300">
+              <div className="relative overflow-hidden h-80">
+                <img
+                  src={HERO_IMAGE}
+                  alt="Sport Weekends"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+              </div>
+              <div className="absolute inset-0 flex flex-col justify-end p-8">
+                <h3 className="text-3xl font-black italic text-white mb-3">Sport Weekend Packages</h3>
+                <ul className="space-y-2 mb-6 text-sm text-foreground/90">
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> AFL
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> NRL
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Accommodation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-amber-500">✓</span> Group planning
+                  </li>
+                </ul>
+                <Button
+                  onClick={() => navigate("/packages/custom-escapes")}
+                  className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold py-3 text-base"
+                >
+                  See Sports Packages
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
           TESTIMONIALS SECTION
           ============================================================ */}
       <section className="py-24 bg-black/50">
