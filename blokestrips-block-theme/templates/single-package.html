@@ -1,0 +1,69 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group">
+    <!-- wp:post-featured-image {"width":"100%","height":"400px","sizeSlug":"large","className":"mb-8 overflow-hidden"} /-->
+
+    <!-- wp:group {"className":"container max-w-4xl"} -->
+    <div class="wp-block-group container max-w-4xl">
+        <!-- wp:post-title {"level":1,"className":"text-5xl md:text-6xl font-black italic mb-4"} /-->
+
+        <!-- wp:group {"className":"flex items-center gap-4 text-foreground/70 mb-8"} -->
+        <div class="wp-block-group flex items-center gap-4 text-foreground/70 mb-8">
+            <!-- wp:post-date {"format":"M j, Y"} /-->
+            <!-- wp:paragraph -->
+            <p>•</p>
+            <!-- /wp:paragraph -->
+            <!-- wp:post-author {"showAvatar":false} /-->
+        </div>
+        <!-- /wp:group -->
+
+        <!-- wp:post-content {"className":"prose prose-invert max-w-none mb-12"} /-->
+
+        <!-- wp:post-meta {"key":"_package_price","className":"text-amber-500 font-bold mb-4"} /-->
+
+        <!-- wp:post-terms {"term":"package_category","className":"flex flex-wrap gap-4 border-t border-amber-500/20 pt-8"} /-->
+
+        <!-- wp:group {"className":"mt-16 pt-8 border-t border-amber-500/20 flex justify-between"} -->
+        <div class="wp-block-group mt-16 pt-8 border-t border-amber-500/20 flex justify-between">
+            <!-- wp:post-navigation-link {"type":"previous","label":"Previous Package","className":"btn-outline-white"} /-->
+            <!-- wp:post-navigation-link {"type":"next","label":"Next Package","className":"btn-outline-white"} /-->
+        </div>
+        <!-- /wp:group -->
+
+        <!-- wp:query {"queryId":4,"query":{"perPage":3,"pages":0,"offset":0,"postType":"package","order":"rand","orderBy":"date","author":"","search":"","exclude":[<?php echo get_the_ID(); ?>],"inherit":false},"tagName":"section","className":"mt-16 pt-8 border-t border-amber-500/20"} -->
+        <section class="wp-block-query mt-16 pt-8 border-t border-amber-500/20">
+            <!-- wp:heading {"level":2,"className":"text-3xl font-black italic mb-8"} -->
+            <h2 class="text-3xl font-black italic mb-8">Related Packages</h2>
+            <!-- /wp:heading -->
+
+            <!-- wp:post-template {"className":"grid md:grid-cols-3 gap-8"} -->
+                <!-- wp:group {"className":"border border-amber-500/30 bg-black/50 overflow-hidden hover:border-amber-500 transition-colors card-lift"} -->
+                <div class="wp-block-group border border-amber-500/30 bg-black/50 overflow-hidden hover:border-amber-500 transition-colors card-lift">
+                    <!-- wp:post-featured-image {"width":"100%","height":"200px","sizeSlug":"medium","className":"w-full h-48 object-cover"} /-->
+
+                    <!-- wp:group {"className":"p-6"} -->
+                    <div class="wp-block-group p-6">
+                        <!-- wp:post-title {"level":3,"isLink":true,"className":"text-xl font-black italic mb-2"} /-->
+
+                        <!-- wp:post-excerpt {"showMore":false,"className":"text-foreground/80 mb-4 text-sm leading-relaxed"} /-->
+
+                        <!-- wp:buttons -->
+                        <div class="wp-block-buttons">
+                            <!-- wp:button {"className":"btn-amber text-sm"} -->
+                            <a class="wp-block-button__link btn-amber text-sm wp-element-button" href="<?php the_permalink(); ?>">View Package</a>
+                            <!-- /wp:button -->
+                        </div>
+                        <!-- /wp:buttons -->
+                    </div>
+                    <!-- /wp:group -->
+                </div>
+                <!-- /wp:group -->
+            <!-- /wp:post-template -->
+        </section>
+        <!-- /wp:query -->
+    </div>
+    <!-- /wp:group -->
+</main>
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

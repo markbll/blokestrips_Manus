@@ -1,0 +1,44 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group">
+    <!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"inherit":true},"tagName":"div","align":"wide","className":"grid md:grid-cols-2 lg:grid-cols-3 gap-8"} -->
+    <div class="wp-block-query alignwide grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- wp:post-template -->
+            <!-- wp:group {"className":"border border-amber-500/30 bg-black/50 overflow-hidden hover:border-amber-500 transition-colors card-lift"} -->
+            <div class="wp-block-group border border-amber-500/30 bg-black/50 overflow-hidden hover:border-amber-500 transition-colors card-lift">
+                <!-- wp:post-featured-image {"width":"100%","height":"200px","sizeSlug":"large","className":"w-full h-48 object-cover"} /-->
+
+                <!-- wp:group {"className":"p-8"} -->
+                <div class="wp-block-group p-8">
+                    <!-- wp:post-title {"level":3,"isLink":true,"className":"text-2xl font-black italic mb-2"} /-->
+
+                    <!-- wp:post-excerpt {"showMore":false,"className":"text-foreground/80 mb-6 text-sm leading-relaxed"} /-->
+
+                    <!-- wp:buttons {"className":"wp-block-buttons w-full text-center block"} -->
+                    <div class="wp-block-buttons w-full text-center block">
+                        <!-- wp:button {"className":"btn-amber w-full text-center block"} -->
+                        <a class="wp-block-button__link btn-amber w-full text-center block wp-element-button" href="<?php the_permalink(); ?>">View Details</a>
+                        <!-- /wp:button -->
+                    </div>
+                    <!-- /wp:buttons -->
+                </div>
+                <!-- /wp:group -->
+            </div>
+            <!-- /wp:group -->
+        <!-- /wp:post-template -->
+
+        <!-- wp:query-no-results -->
+            <!-- wp:paragraph {"placeholder":"Add text or blocks that will display when a query returns no results."} /-->
+        <!-- /wp:query-no-results -->
+    </div>
+    <!-- /wp:query -->
+
+    <!-- wp:query-pagination {"paginationArrow":"arrow","layout":{"type":"flex","justifyContent":"center"}} -->
+    <!-- wp:query-pagination-previous /-->
+    <!-- wp:query-pagination-numbers /-->
+    <!-- wp:query-pagination-next /-->
+    <!-- /wp:query-pagination -->
+</main>
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

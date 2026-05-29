@@ -1,0 +1,47 @@
+/*
+Theme Name: BlokesTrips Block Theme
+Theme URI: https://blokestrips.com.au
+Author: BlokesTrips
+Author URI: https://blokestrips.com.au
+Description: A modern, dark-themed WordPress Block Theme for BlokesTrips group trip planning service. Features a tactical sports brand aesthetic with amber accents, responsive design, and Full Site Editing capabilities.
+Version: 1.0.0
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: blokestrips-block
+Domain Path: /languages
+Requires at least: 6.0
+Requires PHP: 7.4
+*/
+
+/* ============================================================
+   BLOKESTRIPS WORDPRESS BLOCK THEME - GLOBAL DESIGN SYSTEM
+   Philosophy: Bold Tactical Sports Brand
+   - Near-black charcoal (#111111) dominant
+   - Warm amber (#E8920A) single accent
+   - Barlow Condensed 900 Italic for all display headings
+   - Sharp corners, no radius
+   - Angular dividers, ghost step numbers
+   ============================================================ */
+
+/* Core styles are handled by theme.json and WordPress's block editor. */
+/* Additional custom CSS can be added here if needed. */
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--wp--preset--color--amber);
+}
+
+}

@@ -1,0 +1,74 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"},"className":"py-24 bg-black min-h-screen flex items-center"} -->
+<main class="wp-block-group py-24 bg-black min-h-screen flex items-center">
+    <!-- wp:group {"className":"container text-center"} -->
+    <div class="wp-block-group container text-center">
+        <!-- wp:group {"className":"mb-8"} -->
+        <div class="wp-block-group mb-8">
+            <!-- wp:heading {"level":1,"className":"text-9xl font-black italic text-amber-500 mb-4"} -->
+            <h1 class="text-9xl font-black italic text-amber-500 mb-4">404</h1>
+            <!-- /wp:heading -->
+
+            <!-- wp:heading {"level":2,"className":"text-5xl md:text-6xl font-black italic mb-6"} -->
+            <h2 class="text-5xl md:text-6xl font-black italic mb-6">Page Not Found</h2>
+            <!-- /wp:heading -->
+        </div>
+        <!-- /wp:group -->
+
+        <!-- wp:paragraph {"className":"text-xl text-foreground/80 max-w-2xl mx-auto mb-12 leading-relaxed"} -->
+        <p class="text-xl text-foreground/80 max-w-2xl mx-auto mb-12 leading-relaxed">Sorry, the page you're looking for doesn't exist. It might have been moved or deleted. Let's get you back on track.</p>
+        <!-- /wp:paragraph -->
+
+        <!-- wp:buttons {"className":"flex flex-col sm:flex-row gap-4 justify-center"} -->
+        <div class="wp-block-buttons flex flex-col sm:flex-row gap-4 justify-center">
+            <!-- wp:button {"url":"/","className":"btn-amber py-4 px-8 text-lg"} -->
+            <div class="wp-block-button"><a class="wp-block-button__link btn-amber py-4 px-8 text-lg wp-element-button" href="/">Back to Home</a></div>
+            <!-- /wp:button -->
+
+            <!-- wp:button {"url":"/packages","className":"btn-outline-white py-4 px-8 text-lg"} -->
+            <div class="wp-block-button"><a class="wp-block-button__link btn-outline-white py-4 px-8 text-lg wp-element-button" href="/packages">Browse Packages</a></div>
+            <!-- /wp:button -->
+        </div>
+        <!-- /wp:buttons -->
+
+        <!-- wp:group {"className":"mt-16 pt-12 border-t border-amber-500/20"} -->
+        <div class="wp-block-group mt-16 pt-12 border-t border-amber-500/20">
+            <!-- wp:heading {"level":3,"className":"text-2xl font-black italic mb-8"} -->
+            <h3 class="text-2xl font-black italic mb-8">Popular Pages</h3>
+            <!-- /wp:heading -->
+
+            <!-- wp:columns {"className":"grid md:grid-cols-3 gap-6 max-w-3xl mx-auto"} -->
+            <div class="wp-block-columns grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                <!-- wp:column -->
+                <div class="wp-block-column">
+                    <!-- wp:button {"url":"/how-it-works","className":"p-6 border border-amber-500/30 bg-black/50 hover:border-amber-500 transition-colors"} -->
+                    <div class="wp-block-button"><a class="wp-block-button__link p-6 border border-amber-500/30 bg-black/50 hover:border-amber-500 transition-colors wp-element-button" href="/how-it-works">How It Works →</a></div>
+                    <!-- /wp:button -->
+                </div>
+                <!-- /wp:column -->
+
+                <!-- wp:column -->
+                <div class="wp-block-column">
+                    <!-- wp:button {"url":"/packages/?package_category=golf","className":"p-6 border border-amber-500/30 bg-black/50 hover:border-amber-500 transition-colors"} -->
+                    <div class="wp-block-button"><a class="wp-block-button__link p-6 border border-amber-500/30 bg-black/50 hover:border-amber-500 transition-colors wp-element-button" href="/packages/?package_category=golf">Golf Trips →</a></div>
+                    <!-- /wp:button -->
+                </div>
+                <!-- /wp:column -->
+
+                <!-- wp:column -->
+                <div class="wp-block-column">
+                    <!-- wp:button {"url":"/packages/?package_category=fishing","className":"p-6 border border-amber-500/30 bg-black/50 hover:border-amber-500 transition-colors"} -->
+                    <div class="wp-block-button"><a class="wp-block-button__link p-6 border border-amber-500/30 bg-black/50 hover:border-amber-500 transition-colors wp-element-button" href="/packages/?package_category=fishing">Fishing Trips →</a></div>
+                    <!-- /wp:button -->
+                </div>
+                <!-- /wp:column -->
+            </div>
+            <!-- /wp:columns -->
+        </div>
+        <!-- /wp:group -->
+    </div>
+    <!-- /wp:group -->
+</main>
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
