@@ -1,0 +1,480 @@
+/*
+Theme Name: BlokesTrips
+Theme URI: https://blokestrips.com.au
+Author: BlokesTrips
+Author URI: https://blokestrips.com.au
+Description: A modern, dark-themed WordPress theme for BlokesTrips group trip planning service. Features a tactical sports brand aesthetic with amber accents, TailwindCSS styling, and responsive design.
+Version: 1.0.0
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: blokestrips
+Domain Path: /languages
+Requires at least: 6.0
+Requires PHP: 7.4
+*/
+
+/* ============================================================
+   BLOKESTRIPS WORDPRESS THEME - GLOBAL DESIGN SYSTEM
+   Philosophy: Bold Tactical Sports Brand
+   - Near-black charcoal (#111111) dominant
+   - Warm amber (#E8920A) single accent
+   - Barlow Condensed 900 Italic for all display headings
+   - Sharp corners, no radius
+   - Angular dividers, ghost step numbers
+   ============================================================ */
+
+:root {
+  --radius: 0px;
+  --background: #111111;
+  --foreground: #f2f2f2;
+  --card: #1a1a1a;
+  --card-foreground: #f2f2f2;
+  --primary: #E8920A;
+  --primary-foreground: #111111;
+  --secondary: #2a2a2a;
+  --secondary-foreground: #d8d8d8;
+  --muted: #2a2a2a;
+  --muted-foreground: #8d8d8d;
+  --accent: #E8920A;
+  --accent-foreground: #111111;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #E8920A;
+}
+
+* {
+  border-color: var(--border);
+  outline-color: rgba(232, 146, 10, 0.5);
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* ── Typography: Barlow Condensed Display ── */
+.bt-display {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.bt-display-normal {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.bt-label {
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+h2 {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+h3 {
+  font-size: 1.875rem;
+  line-height: 1.1;
+}
+
+h4 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+h5 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+h6 {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+p {
+  margin: 0 0 1rem 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.15s ease-out;
+}
+
+a:hover {
+  color: #d4820a;
+}
+
+/* ── Buttons ── */
+.btn-amber {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--accent);
+  color: var(--primary-foreground);
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 150ms ease-out, transform 100ms ease-out;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-amber:hover {
+  background-color: #d4820a;
+  color: var(--primary-foreground);
+}
+
+.btn-amber:active {
+  transform: scale(0.97);
+}
+
+.btn-outline-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: #ffffff;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: border-color 150ms ease-out, background-color 150ms ease-out, transform 100ms ease-out;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-outline-white:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.btn-outline-white:active {
+  transform: scale(0.97);
+}
+
+/* ── Container ── */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 1280px;
+  }
+}
+
+/* ── Card Lift ── */
+.card-lift {
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 200ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Fade-in animation ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* ── Section divider amber line ── */
+.amber-top-line {
+  position: relative;
+}
+
+.amber-top-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3rem;
+  height: 3px;
+  background-color: var(--accent);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ── WordPress Core Styles ── */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button,
+[role="button"],
+[type="button"],
+[type="submit"],
+a[href],
+select,
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ── WordPress Admin Bar Fix ── */
+body.admin-bar {
+  padding-top: 0;
+}
+
+/* ── Responsive Grid ── */
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ── Flexbox Utilities ── */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.gap-8 {
+  gap: 2rem;
+}
+
+/* ── Spacing ── */
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.py-24 {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* ── Text Colors ── */
+.text-amber-500 {
+  color: var(--accent);
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-foreground {
+  color: var(--foreground);
+}
+
+.text-foreground\/80 {
+  color: rgba(242, 242, 242, 0.8);
+}
+
+.text-foreground\/50 {
+  color: rgba(242, 242, 242, 0.5);
+}
+
+/* ── Background Colors ── */
+.bg-black {
+  background-color: #111111;
+}
+
+.bg-black\/50 {
+  background-color: rgba(17, 17, 17, 0.5);
+}
+
+.bg-amber-500 {
+  background-color: var(--accent);
+}
+
+/* ── Border Styles ── */
+.border {
+  border: 1px solid var(--border);
+}
+
+.border-amber-500 {
+  border-color: var(--accent);
+}
+
+.border-amber-500\/30 {
+  border-color: rgba(232, 146, 10, 0.3);
+}
+
+.border-t {
+  border-top: 1px solid var(--border);
+}
+
+/* ── Responsive Display ── */
+.hidden {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:hidden {
+    display: none;
+  }
+}
